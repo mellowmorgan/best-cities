@@ -64,7 +64,7 @@ p {
 
 .bg-dark {
     color: #fff;
-    background-color: #222;
+    background-color: #D8DBE2;
 }
 
 .text-faded {
@@ -185,6 +185,7 @@ header {
     min-height: auto;
     text-align: center;
     color: #fff;
+    background-color: #D8DBE2;
     background-image: url(../img/header.jpg);
     background-position: center;
     -webkit-background-size: cover;
@@ -388,7 +389,7 @@ fieldset[disabled] .btn-default.active {
 
 .btn-default .badge {
     color: #fff;
-    background-color: #222;
+    background-color: #D8DBE2;
 }
 
 .btn-primary {

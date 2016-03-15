@@ -1,6 +1,5 @@
 import sqlite3
 class Search: 
-
 	def __init__(self, occupation):
 	    self.occupation = str(occupation)
 
@@ -54,6 +53,7 @@ class Search:
 		over_set= over_set[0:50]
 		self.over_set = over_set
 		return self.over_set
+
 	def remove_dup(self, listy):
 		checker=[]	
 		i=0	
@@ -66,6 +66,51 @@ class Search:
 			else:
 				listy.remove(lil)
 		return listy
+def key():
+	con = sqlite3.connect('data/data.db')
+	cur = con.cursor()
+	cur.execute("SELECT occu from cities where locu = 'New York, NY';")
+	key = cur.fetchall()
+	key.sort()
+	key_list = []
+	for entry in key:
+		key_list.append(str(entry[0]))
+
+	checker=[]	
+	i=0	
+	while i<(len(key_list)):
+		lil=key_list[i]
+		if lil not in checker:
+			checker.append(lil)
+			i=i+1
+		else:
+			key_list.remove(lil)
+	return key_list
+
+def best_list(big):
+	for i in xrange(len(big)):
+		listy=big[i]
+	 	code = listy[4]
+	 	code = 'ZILL/M' + code + "_RMP"
+	 	data = Quandl.get(code, authtoken=quandl_api_key)
+	 	last = data.tail(1)
+	 	rent = int(last.Value)
+	 	listy.append(rent)	
+	 	listy.append(listy[2] - (12*listy[5]))
+	return (big)
+def get_rents(big):
+	con = sqlite3.connect("data/data.db")
+	cur = con.cursor()
+
+	for i in xrange(len(big)):
+		listy=big[i]
+		code = listy[4]
+		cur.execute("SELECT rent from rentscodes WHERE code=?", (code,))
+		rent = cur.fetchone()
+		rent = rent[0]
+		listy.append(rent)
+		listy.append(listy[2]-(12*listy[5]))
+	return (big)
 
 #TEST METHODS IN CLASS
 # test = Search("Software Developer")

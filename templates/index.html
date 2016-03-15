@@ -25,7 +25,6 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{url_for('static', filename='css/creative.css')}}" type="text/css">
 
-    <link rel="stylesheet" href="{{url_for('static', filename='css/custom.css')}}" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -80,9 +79,17 @@
                 <div class="col-sm-4">
 
 	                <form class="form-group" action="/results">
-	                    <input class="form-control" placeholder= "Enter your occupation: " onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your occupation:'" type="search" name="occupation">
+						<div align="center" >
+							<select name="occupation" style="color: black;">
+								{% for job in jobs %}
+							  		<option value={{job}}>{{job}}</option>
+							  	{% endfor %}
+							</select>
+						</div>
 		                <button type="submit" style="margin: 20px;" class="btn btn-primary btn-xl">Find your Best City</button>
 	                </form>
+
+
                 </div>
                 <div class="col-sm-4"></div>
 
