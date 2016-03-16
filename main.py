@@ -18,31 +18,33 @@ def homepage():
 	k=key()
 	return render_template("index.html", jobs=k)
 
-@app.route("/results")
-def occupation_handler():
+#list of lists containing info for best cities
+
+@app.route('/results/page/<int:page>')
+@app.route("/results/", defaults={'page': None})
+def occupation_handler(page):
 	# Receive data from occupation input form and do stuff with it
-	occupation = request.args.get("occupation")
-	print occupation
-	# API handling stuff goes here
-	s = Search(occupation)
-	a = s.avg_salary()
-	over = s.over_med(a[0])
-	added = s.add_codes(over) 	
-	clean = s.remove_dup(added)
-	best = get_rents(clean)
-	best.sort(key=lambda x: x[6],reverse=True)
-	final = best[0:5]
-	first= final[0]
-	loc= first[0]
-	avg = a[0]
-	occu=first[1]
-	med = first[2]
-	try:
-		num = int(first[3])
-	except:
-		num = None
-	rent = first[5]
-	return render_template("results.html", loc=loc,occupation=occupation, occu=occu, avg=avg,med=med,num=num,rent=rent)
+	if not page:
+		occupation = request.args.get("occupation")
+		s = Search(occupation)
+		a = s.avg_salary()
+		over = s.over_med(a[0])
+		added = s.add_codes(over) 	
+		clean = s.remove_dup(added)
+		best = get_rents(clean)
+		best.sort(key=lambda x: x[6],reverse=True)
+		global final 
+		final= best[0:5] #final now has five best cities with their info in it!
+		global avg
+		avg = a[0]
+		page=1
+		current=final[page-1]	
+	else:
+		current=final[page-1]
+
+	return render_template("results.html", current=current,avg=avg,  page=page)
+
+
 
 if __name__ == "__main__":
 	app.run(debug=True)

@@ -75,23 +75,19 @@
                 <hr>
 
                 <p>We use current data to find the best US city to live in according to your occupation.</p>
-                <div class="col-sm-4"></div>
-                <div class="col-sm-4">
+ 
+                <div>
 
-	                <form class="form-group" action="/results">
-						<div align="center" >
-							<select name="occupation" style="color: black;">
+	                <form class="form-group" action="/results/">
+							<select name="occupation" style="color: black; width:350px; text-overflow: ellipsis;display: margin-left: auto; margin-right: auto; margin: 0 auto; inline-block;">
 								{% for job in jobs %}
 							  		<option value={{job}}>{{job}}</option>
 							  	{% endfor %}
 							</select>
-						</div>
+					</div>
+					
 		                <button type="submit" style="margin: 20px;" class="btn btn-primary btn-xl">Find your Best City</button>
 	                </form>
-
-
-                </div>
-                <div class="col-sm-4"></div>
 
 
 

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Results|1</title>
+    <title>Results|{{page}}</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}" type="text/css">
@@ -74,37 +74,39 @@
         <div class="header-content">
             <div class="header-content-inner">
 
-				<h1>{{loc}}</h1>
+				<h1>{{current[0]}}</h1>
 				<hr>
 
 				<div class="img-rounded" style="background-color:#ffffff; display: inline-block; color: black; text-align: left; padding: 10px;font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;font-weight: 600;">
-					Occupation Title: {{occu}} <br>
+
+					Occupation Title: {{current[1]}} <br>
 					Average salary in US: {{avg}} <br>
-					Average salary in {{loc}}: {{med}} <br>
-					Average rental cost per month in {{loc}}: {{rent}} <br>
-					{% if num %}
-					Number employed in {{loc}}: {{num}} <br>
+					Average salary in {{current[0]}}: {{current[2]}} <br>
+					Average rental cost per month in {{current[0]}}: {{current[5]}} <br>
+					{% if current[3] %}
+					Number employed in {{current[0]}}: {{current[3]}} <br>
 					{% endif %}
 				</div>
-				<!-- 
-                <h1>Where is the best city for you?</h1>
-                <hr>
-
-                <p>We use current data to find the best US city to live in according to your occupation.</p>
-                <div class="col-sm-4"></div>
-                <div class="col-sm-4">
-
-	                <form class="form-group" action="/results">
-	                    <input class="form-control" placeholder= "Enter your occupation: " onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter your occupation:'" type="search" name="occupation">
-		                <button type="submit" style="margin: 20px;" class="btn btn-primary btn-xl">Find your Best City</button>
-	                </form>
-                </div>
-                <div class="col-sm-4"></div> -->
-
+				
 
 
             </div>
+			<div class="container">                
+				<ul class="pagination">
+				    <li><a href="/results/page/1">1</a></li>
+				    <li><a href="/results/page/2">2</a></li>
+				    <li><a href="/results/page/3">3</a></li>
+				    <li><a href="/results/page/4">4</a></li>
+				    <li><a href="/results/page/5">5</a></li>
+				</ul>
+			</div>
+
+
         </div>
+
+
+
+
     </header>
 
     <section class="bg-primary" id="info">
