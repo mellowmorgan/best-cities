@@ -1,4 +1,4 @@
-Flask==0.10.1
+﻿Flask==0.10.1
 Flask-Cors==2.0.1
 flask-paginate==0.4.1
 Flask-PyMongo==0.3.1
@@ -14,17 +14,11 @@ Mako==0.9.1
 MarkupSafe==0.23
 oauthlib==0.6.1
 pandas==0.17.1
-pyOpenSSL==0.13
-pyserial==2.6
 Quandl==2.8.9
 requests==2.2.1
-sessioninstaller==0.0.0
 six==1.5.2
 sortedcontainers==0.9.6
 SQLAlchemy==1.0.8
-system-service==0.1.6
-texttable==0.8.4
-twilio==4.4.0
 urllib3==1.7.1
 uTidylib==0.2
 vboxapi==1.0
