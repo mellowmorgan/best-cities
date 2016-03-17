@@ -1,5 +1,5 @@
 import sqlite3
-"""USES QUANDL ZILLOW API TO FILL TABLE rentscodes WITH CURRENT MEDIAN RENTAL COSTS BY CITY CODE IN TABLE"""
+"""Uses Quandl Zillow API to fill table 'rentscodes' with current median rental costs by city code in table."""
 
 quandl_api_key = os.environ['QUANDL_API_KEY']
 con = sqlite3.connect("data/data.db")
