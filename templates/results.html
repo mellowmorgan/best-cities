@@ -72,7 +72,7 @@
 						Average salary in United States: <strong>${{"{:,}".format(global_avg)}}</strong> <br>
 						Average rental cost per month in {{current[0]}}: <strong>${{"{:,}".format(current[4])}}</strong>
 						{% if current[3]!='**' %}
-							<br>Number employed in {{current[0]}}: <strong>{{current[3]|int}}</strong>
+							<br>Number employed in {{current[0]}}: <strong>{{"{:,}".format(current[3]|int)}}</strong>
 						{% endif %}
 					</div>
         		</div>
