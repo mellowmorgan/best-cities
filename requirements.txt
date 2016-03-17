@@ -3,7 +3,6 @@ Flask-Cors==2.0.1
 flask-paginate==0.4.1
 Flask-PyMongo==0.3.1
 Flask-SQLAlchemy==2.0
-gunicorn==19.4.5
 html5lib==0.999
 httplib2==0.8
 itsdangerous==0.24
