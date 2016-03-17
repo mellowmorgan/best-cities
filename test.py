@@ -1,11 +1,12 @@
 import sqlite3
-import os
-import Quandl
+"""USES QUANDL ZILLOW API TO FILL TABLE rentscodes WITH CURRENT MEDIAN RENTAL COSTS BY CITY CODE IN TABLE"""
+
 quandl_api_key = os.environ['QUANDL_API_KEY']
 con = sqlite3.connect("data/data.db")
 cur = con.cursor()
 cur.execute("SELECT code from rentscodes")
 codes = cur.fetchall()
+
 for item in codes:
 	code=item[0]
 	value = 'ZILL/M' + code + "_RMP"
@@ -18,4 +19,5 @@ for item in codes:
 	except:
 		cur.execute("DELETE FROM rentscodes WHERE code=?", (code,))
 		con.commit()
+
 con.close()

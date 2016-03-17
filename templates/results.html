@@ -25,19 +25,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{url_for('static', filename='css/creative.css')}}" type="text/css">
 
-    <link rel="stylesheet" href="{{url_for('static', filename='css/custom.css')}}" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
 </head>
 
 <body id="page-top">
-
 
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
@@ -61,8 +51,7 @@
                     </li>
                     <li>
                         <a class="page-scroll" href="#about">About</a>
-                    </li>
-                   
+                    </li>     
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -76,21 +65,17 @@
 
 				<h1>{{current[0]}}</h1>
 				<hr>
-
-				<div class="img-rounded" style="background-color:#ffffff; display: inline-block; color: black; text-align: left; padding: 10px;font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;font-weight: 600;">
-
-					Occupation Title: {{current[1]}} <br>
-					Average salary in US: {{avg}} <br>
-					Average salary in {{current[0]}}: {{current[2]}} <br>
-					Average rental cost per month in {{current[0]}}: {{current[5]}} <br>
-					{% if current[3] %}
-					Number employed in {{current[0]}}: {{current[3]}} <br>
-					{% endif %}
-				</div>
-				
-
-
-            </div>
+				<div style="background-color:#ffffff; text-align:center;padding:30px;line-height: 200%; width:100%;color:black; font-size:16px; font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif">
+					<div style="display:inline-block; text-align:left; ">
+						Occupation Title: <strong>{{current[1]}}</strong> <br>
+						Average salary in {{current[0]}}: <strong>${{"{:,}".format(current[2])}}</strong> <br>
+						Average salary in United States: <strong>${{"{:,}".format(global_avg)}}</strong> <br>
+						Average rental cost per month in {{current[0]}}: <strong>${{"{:,}".format(current[4])}}</strong>
+						{% if current[3]!='**' %}
+							<br>Number employed in {{current[0]}}: <strong>{{current[3]|int}}</strong>
+						{% endif %}
+					</div>
+        		</div>
 			<div class="container">                
 				<ul class="pagination">
 				    <li><a href="/results/page/1">1</a></li>
@@ -100,13 +85,7 @@
 				    <li><a href="/results/page/5">5</a></li>
 				</ul>
 			</div>
-
-
         </div>
-
-
-
-
     </header>
 
     <section class="bg-primary" id="info">
@@ -115,7 +94,7 @@
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <h2 class="section-heading">Info</h2>
                     <hr class="light">
-                    <p class="text-faded">This web app helps users find the perfect city for them based upon their occupation.</p>
+                    <p class="text-faded">Best City helps users find the perfect city for them based upon their occupation, using salary and rental costs to determine the best U.S. cities to live in. </p>
               
                 </div>
             </div>
@@ -127,8 +106,9 @@
                 <div class="col-lg-12 col-md-6 text-center">
                     <h2 class="section-heading">About</h2>
                     <hr class="primary">
-                    <p class="text-muted">This web app was developed by Morgan Waites.</p>
-                    
+                      <p class="text-muted">Best City was developed by Morgan Waites using Flask, a Python web framework. Salary and occupational data was obtained from the U.S. Bureau of Labor Statistics. Rental data was obtained from Zillow through the Quandl API. 
+                    <br>
+                    <a href="https://www.linkedin.com/in/morgan-waites-187237102">LinkedIn</a>|<a href="https://github.com/mellowmorgan/best-cities">GitHub</a></p> 
                 </div>
             </div>
         </div>
@@ -147,7 +127,5 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/creative.js"></script>
-
 </body>
-
 </html>

@@ -1,124 +1,117 @@
 import sqlite3
+
 class Search: 
+
 	def __init__(self, occupation):
 	    self.occupation = str(occupation)
 
-	#returns tuple containing avg salary of all salaries for given occupation in table
-	def avg_salary(self):
-		con = sqlite3.connect('data/data.db')
-		curs = con.cursor()
-		curs.execute("select avg(med) from tbl2 where occu LIKE ?", ('%'+self.occupation+'%',))
-		salary_tuple = curs.fetchone() #fetch the first value it returns, since we only need one value
-		curs.execute("select occu from cities where occu LIKE ?", ('%'+self.occupation+'%',))
+	def nat_avg_salary(self):
+		"""Returns tuple containing the average salary for given occupation in table and occupation as seen in table."""
+		
+		"""Database data contains U.S. salary data obtained from Federal Bureau of Labor Statistics website.
+		Code below enables python to go into sqlite database and retrieve data in tables"""  
+		conn = sqlite3.connect('data/data.db') 
+		curs = conn.cursor()
 
-		#obtain name of occupation as seem on table, so can print it correctly of results page (this is done in case user enters only part of name)
-		occu = curs.fetchone(); 
-		#returns tuple, must index to obtain text by itself
-		self.occupation= occu[0]
-		#same with average salary, must isolate integer from tuple given as fetchone() returns tuple
-		self.avg_salary = int(round(salary_tuple[0]))		
-		tup = (self.avg_salary, self.occupation) 
-		return (tup)
+		curs.execute("SELECT avg(med) FROM tbl2 WHERE occu=?", (self.occupation,))
+		salary_tuple = curs.fetchone() #returns tuple containing national average salary for given occupation
+		self.avg_salary = int(salary_tuple[0]) #Same with average salary, must isolate integer from tuple
 
-	#returns list of tuples containing info of each row where salary of given occupation is higher than national average
-	def over_med(self, avg):
-		con = sqlite3.connect('data/data.db')
-		curs = con.cursor()
-	 	curs.execute("select locu,occu,med,emp from cities where occu LIKE ? AND med>?", ('%'+self.occupation+'%', avg))
-	 	self.results=curs.fetchall()
-	 	return (self.results)
-	def add_codes(self, med_set):
-		con=sqlite3.connect("data/data.db")
-		cur =con.cursor()
-		over_set = med_set
-		for i in range(len(over_set)):
-			tup =over_set[i]
+		"""This chunk of code below is actually superfluous given drop-down menu that restricts user to selecting occupation 
+		exactly as it appears in database, but if they were to enter it in themselves, this code would be necessary"""
+		curs.execute("SELECT occu FROM cities WHERE occu LIKE ?", ('%'+self.occupation+'%',))
+		occupation_tuple = curs.fetchone() 
+		self.occupation= occupation_tuple[0] #Must index tuple to obtain text by itself
+
+		tuple_salary_occupation = (self.avg_salary, self.occupation) #make tuple containing average salary and occupation
+		
+		return (tuple_salary_occupation)
+
+	def over_med_salary(self, avg):
+		"""Returns list of tuples containing info of each row where salary of given occupation is higher than national average."""
+
+		conn = sqlite3.connect('data/data.db')
+		curs = conn.cursor()
+
+	 	curs.execute("SELECT locu, occu, med, emp FROM cities WHERE occu LIKE ? AND med > ?", ('%'+self.occupation+'%', avg))
+	 	#get selected rows where occupation equals selected occupation and median salary is over national average for given occupation
+
+	 	self.results=curs.fetchall() #returns selected rows as tuples in a list
+	 	
+	 	return (self.results) 
+
+	def get_rents(self, best_city_list):
+		"""Converts tuples in list to lists in list, so that rent can be appended
+		as well as median annual salary minus rent*12 to determine best cities
+		and sorts list of best cities, descending"""
+		
+		conn=sqlite3.connect("data/data.db")
+		curs =conn.cursor()
+		
+		for i in range(len(best_city_list)):
+			tup =best_city_list[i] #tup represents each tuple in list
 			location = tup[0]
-			cur.execute("SELECT code from rents WHERE city=?", (location,))
-			code= cur.fetchone()
-			list_tup = list(tup)
-			if code != None:
-				code = code[0]
-			list_tup.append(code)
-			over_set[i]=list_tup
-		i=0
-		while i<(len(over_set)):
-			l = over_set[i]
-		 	if l[4] == None:
-		 		check = over_set.pop(i)
-		 	else:
-		 		i=i+1
-		over_set.sort(key=lambda x: x[2], reverse=True)
+			curs.execute("SELECT rent FROM rentscodes WHERE city=?", (location,))
+			rent= curs.fetchone() #returns rent at location in tuple
+			tuple_as_list = list(tup) #converts tuple to list so it is mutable
+			if rent != None: 
+				"""For some cities, there is no rent information available in table."""
+				rent=rent[0] #isolate rent from tuple
+				tuple_as_list.append(rent)
+				tuple_as_list.append(tuple_as_list[2]-(12*rent)) #salary minus rent*12; formula for determining best cities
+			else:
+				best_city_list.pop(i) #remove list in list where there is no rent info available
 
-		over_set= over_set[0:50]
-		self.over_set = over_set
-		return self.over_set
+			best_city_list[i] = tuple_as_list
 
-	def remove_dup(self, listy):
-		checker=[]	
+		best_city_list.sort(key=lambda x: x[5], reverse=True) 
+		#sorts list according to the last item in each list in list, which is salary minus rent*12, descending from best	
+		return best_city_list
+
+	def remove_duplicates(self, best_city_list):
+		"""Remove any duplicate lists for one city in best_city_list"""
+		
+		non_duplicates=[]	
 		i=0	
-		while i<(len(listy)):
-			lil=listy[i]
-			locu=lil[0]
-			if locu not in checker:
-				checker.append(locu)
+		
+		while i<(len(best_city_list)):
+			item=best_city_list[i]
+			location=item[0]
+			if location not in non_duplicates:
+				non_duplicates.append(location)
 				i=i+1
 			else:
-				listy.remove(lil)
-		return listy
+				best_city_list.remove(item)
+		
+		return best_city_list #return list with removed duplicates
+
+
+
 def key():
-	con = sqlite3.connect('data/data.db')
-	cur = con.cursor()
-	cur.execute("SELECT occu from cities where locu = 'New York, NY';")
-	key = cur.fetchall()
-	key.sort()
+	"""Returns list of all occupations in cities table for drop-down menu on homepage"""
+	
+	conn = sqlite3.connect('data/data.db')
+	curs = conn.cursor()
+	curs.execute("SELECT occu FROM cities WHERE locu = 'Portland, OR';") 
+	"""for efficiency, picked big city where there are most likely all occupations that exist within U.S.""" 
+
+	key = curs.fetchall() #returns list of tuples
+	key.sort() #sorts list alphabetically
 	key_list = []
+	
+	#For loop makes list of tuples into simple list of type string occupations
 	for entry in key:
 		key_list.append(str(entry[0]))
 
-	checker=[]	
+	checker=[]	 
 	i=0	
 	while i<(len(key_list)):
+		"""Just in case, remove duplicates"""
 		lil=key_list[i]
 		if lil not in checker:
 			checker.append(lil)
 			i=i+1
 		else:
 			key_list.remove(lil)
-	return key_list
-
-def best_list(big):
-	for i in xrange(len(big)):
-		listy=big[i]
-	 	code = listy[4]
-	 	code = 'ZILL/M' + code + "_RMP"
-	 	data = Quandl.get(code, authtoken=quandl_api_key)
-	 	last = data.tail(1)
-	 	rent = int(last.Value)
-	 	listy.append(rent)	
-	 	listy.append(listy[2] - (12*listy[5]))
-	return (big)
-def get_rents(big):
-	con = sqlite3.connect("data/data.db")
-	cur = con.cursor()
-
-	for i in xrange(len(big)):
-		listy=big[i]
-		code = listy[4]
-		cur.execute("SELECT rent from rentscodes WHERE code=?", (code,))
-		rent = cur.fetchone()
-		rent = rent[0]
-		listy.append(rent)
-		listy.append(listy[2]-(12*listy[5]))
-	return (big)
-
-#TEST METHODS IN CLASS
-# test = Search("Software Developer")
-# a=test.avg_salary()
-# a= a[0]
-# print a
-# over = test.over_med(a)
-# clean = test.add_codes(over)
-# print clean
-
-
+	
+	return key_list 
