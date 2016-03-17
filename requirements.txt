@@ -20,7 +20,6 @@ six==1.5.2
 sortedcontainers==0.9.6
 SQLAlchemy==1.0.8
 urllib3==1.7.1
-vboxapi==1.0
 virtualenv==13.0.3
 Werkzeug==0.11.4
 xlrd==0.9.4
