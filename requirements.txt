@@ -6,7 +6,7 @@ Flask-SQLAlchemy==2.0
 html5lib==0.999
 httplib2==0.8
 itsdangerous==0.24
-Jinja2==2.8
+Jinja2==2.11.3
 lockfile==0.8
 lxml==3.3.3
 Mako==0.9.1
