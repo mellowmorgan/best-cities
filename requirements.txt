@@ -18,7 +18,7 @@ requests==2.2.1
 six==1.5.2
 sortedcontainers==0.9.6
 SQLAlchemy==1.0.8
-urllib3==1.7.1
+urllib3==1.26.5
 virtualenv==13.0.3
 Werkzeug==2.0.1
 xlrd==0.9.4
