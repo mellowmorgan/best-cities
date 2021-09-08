@@ -23,12 +23,12 @@ class Search:
 		conn = sqlite3.connect('data/data.db')
 		curs = conn.cursor()
 
-	 	curs.execute("SELECT locu, occu, med, emp FROM cities WHERE occu LIKE ? AND med > ?", ('%'+self.occupation+'%', avg))
+		curs.execute("SELECT locu, occu, med, emp FROM cities WHERE occu LIKE ? AND med > ?", ('%'+self.occupation+'%', avg))
 	 	#get selected rows where occupation equals selected occupation and median salary is over national average
 
-	 	self.results=curs.fetchall() #returns selected rows as tuples in a list
-	 	
-	 	return (self.results) 
+		self.results=curs.fetchall() #returns selected rows as tuples in a list
+
+		return (self.results) 
 
 	def get_rents(self, best_city_list):
 		"""Returns list of lists containing best cities, sorted descending by salary-rent*12"""

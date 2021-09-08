@@ -29,7 +29,7 @@ def occupation_handler(page):
 			search_obj = Search(occupation)
 			nat_avg = search_obj.nat_avg_salary() 
 
-			sal_over_avg = search_obj.over_med_salary(nat_avg) #list of results where salary > national average
+			sal_over_avg = search_obj.over_med_salary(nat_avg) #list of tuples/results where salary > national average
 			best_list = search_obj.get_rents(sal_over_avg) #returns list of lists with (median rental costs for each city) and (salary-monthly rent*12) added 	
 			best_list = search_obj.remove_duplicates(best_list) #removes lists in list with duplicate location values and returns "cleaned" list
 

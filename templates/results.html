@@ -9,27 +9,27 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Results|{{page}}</title>
+    <title>Results|{{ page }}</title>
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css">
 
     <!-- Custom Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="{{url_for('static', filename='font-awesome/css/font-awesome.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}" type="text/css">
 
     <!-- Plugin CSS -->
-    <link rel="stylesheet" href="{{url_for('static', filename='css/animate.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.min.css') }}" type="text/css">
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{url_for('static', filename='css/creative.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/creative.css') }}" type="text/css">
 
 </head>
 
 <body id="page-top">
 
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top" style="border:0 !important;">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -39,7 +39,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-
+            </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
@@ -51,7 +51,7 @@
                     </li>
                     <li>
                         <a class="page-scroll" href="#about">About</a>
-                    </li>     
+                    </li>      s
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -63,16 +63,16 @@
         <div class="header-content">
             <div class="header-content-inner">
 
-				<h1>{{current[0]}}</h1>
+				<h1>{{ current[0] }}</h1>
 				<hr>
 				<div style="background-color:#ffffff; text-align:center;padding:30px;line-height: 200%; width:100%;color:black; font-size:16px; font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif">
 					<div style="display:inline-block; text-align:left; ">
-						Occupation Title: <strong>{{current[1]}}</strong> <br>
-						Average salary in {{current[0]}}: <strong>${{"{:,}".format(current[2])}}</strong> <br>
-						Average salary in United States: <strong>${{"{:,}".format(global_avg)}}</strong> <br>
-						Average rental cost per month in {{current[0]}}: <strong>${{"{:,}".format(current[4])}}</strong>
+						Occupation Title: <strong>{{ current[1] }}</strong> <br>
+						Average salary in {{ current[0] }}: <strong>${{ "{:,}".format(current[2]) }}</strong> <br>
+						Average salary in United States: <strong>${{ "{:,}".format(global_avg) }}</strong> <br>
+						Average rental cost per month in {{ current[0] }}: <strong>${{ "{:,}".format(current[4]) }}</strong>
 						{% if current[3]!='**' %}
-							<br>Number employed in {{current[0]}}: <strong>{{"{:,}".format(current[3]|int)}}</strong>
+							<br>Number employed in {{ current[0] }}: <strong>{{ "{:,}".format(current[3]|int) }}</strong>
 						{% endif %}
 					</div>
         		</div>
@@ -107,7 +107,7 @@
                     <h2 class="section-heading">About</h2>
                     <hr class="primary">
                       <p class="text-muted">Best City was developed by Morgan Waites using Flask, a Python web framework. Salary and occupational data was obtained from the U.S. Bureau of Labor Statistics. Rental data was obtained from Zillow through the Quandl API. 
-                    <br>
+                   </p><p>
                     <a href="https://www.linkedin.com/in/morgan-waites-187237102">LinkedIn</a>|<a href="https://github.com/mellowmorgan/best-cities">GitHub</a></p> 
                 </div>
             </div>
