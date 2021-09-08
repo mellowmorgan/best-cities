@@ -8,7 +8,7 @@ httplib2==0.8
 itsdangerous==0.24
 Jinja2==3.0.1
 lockfile==0.8
-lxml==3.3.3
+lxml==4.6.3
 Mako==0.9.1
 MarkupSafe==0.23
 oauthlib==0.6.1
