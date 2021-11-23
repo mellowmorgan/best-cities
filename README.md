@@ -15,6 +15,7 @@ Site for finding best city according to occupation.
 * Very out of date! 2016 data used.
 
 ## Link to site
+* Because the Heroku server uses dynos, waking the dyno up may take some time. But after the first load, it starts loading pretty fast because the dyno is active. Please wait up to 1 minute for first load.
 https://best-city.herokuapp.com
 
 ## License
